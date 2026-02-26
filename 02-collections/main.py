@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from collections import defaultdict
 
 # Testovací data: Jméno, Osobní číslo, Předmět
 # Takto vypadají data načtená například z CSV souboru nebo databáze.
@@ -18,18 +19,50 @@ class Student:
     name: str
     os_cislo: str
 
-def get_unique_subjects(data: list[tuple[str, str, str]]) -> set[str]:
-    """
-    Vrátí množinu unikátních předmětů.
-    """
-    return set() # PLACEHOLDER
+    def __eq__(self, other) -> bool:
+        if self.name == other.name and self.os_cislo == other.os_cislo:
+            return True
+        return False
+    
 
-def group_students_by_subject(data: list[tuple[str, str, str]]) -> dict[str, list[Student]]:
+    def __hash__(self) -> int:
+        return (len(self.name) * len(self.os_cislo)) % 5
+
+
+def get_unique_subjects(data: list[tuple[str, str, str]]) -> set[str]:
+    mnozina: set[str] = set()
+    for _, _, subject in data:
+        mnozina.add(subject)
+    return mnozina
+
+
+def group_students_by_subject(data: list[tuple[str, str, str]]) -> dict[str, list[Student]]: 
+    
     """
-    Vrátí slovník, kde klíčem je předmět a hodnotou seznam studentů (instancí třídy Student),
-    kteří jsou na předmět zapsáni.
+    slovnik: dict[str, list[Student]] = {}
+    for name, id, subject in data:
+        st = Student(name, id)
+        if subject in slovnik:
+            slovnik[subject].append(st)
+        else:
+            slovnik[subject] = [st]
+    return slovnik
     """
-    return {} # PLACEHOLDER
+    
+    subject_stud : dict[str, list[Student]] = {}
+
+    for data_line in data:
+        student = Student(name=data_line[0], os_cislo=data_line[1])
+        if data_line[2] in subject_stud:
+            subject_stud[data_line[2]].
+
+    rozvrh: dict[str, list[Student]] = defaultdict(list)
+    for name, id, subject in data:
+        st = Student(name, id)
+        rozvrh[subject].append(st)
+
+    return rozvrh
+
 
 def get_unique_students(data: list[tuple[str, str, str]]) -> set[Student]:
     """
@@ -37,7 +70,13 @@ def get_unique_students(data: list[tuple[str, str, str]]) -> set[Student]:
     Pozor: Data obsahují duplicity (jeden student může mít více předmětů).
     Cílem je získat množinu fyzických osob.
     """
-    return set() # PLACEHOLDER
+    studenti: set[Student] = set()
+    for name, id_c, _ in data:
+        stu = Student(name, id_c)
+        studenti.add(stu)
+    return studenti
+
+
 
 def main() -> None:
     print("--- ÚKOL 1: Unikátní předměty ---")
