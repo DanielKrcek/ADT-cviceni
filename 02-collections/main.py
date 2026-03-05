@@ -18,16 +18,15 @@ raw_data = [
 class Student:
     name: str
     os_cislo: str
-
+"""
     def __eq__(self, other) -> bool:
         if self.name == other.name and self.os_cislo == other.os_cislo:
             return True
         return False
-    
 
     def __hash__(self) -> int:
         return (len(self.name) * len(self.os_cislo)) % 5
-
+"""  # Jakmile mám dataclass(frozen=True), tak to eq a hash udělá za mě
 
 def get_unique_subjects(data: list[tuple[str, str, str]]) -> set[str]:
     mnozina: set[str] = set()
@@ -36,8 +35,7 @@ def get_unique_subjects(data: list[tuple[str, str, str]]) -> set[str]:
     return mnozina
 
 
-def group_students_by_subject(data: list[tuple[str, str, str]]) -> dict[str, list[Student]]: 
-    
+def group_students_by_subject(data: list[tuple[str, str, str]]) -> dict[str, list[Student]]:
     """
     slovnik: dict[str, list[Student]] = {}
     for name, id, subject in data:
@@ -48,13 +46,6 @@ def group_students_by_subject(data: list[tuple[str, str, str]]) -> dict[str, lis
             slovnik[subject] = [st]
     return slovnik
     """
-    
-    subject_stud : dict[str, list[Student]] = {}
-
-    for data_line in data:
-        student = Student(name=data_line[0], os_cislo=data_line[1])
-        if data_line[2] in subject_stud:
-            subject_stud[data_line[2]].
 
     rozvrh: dict[str, list[Student]] = defaultdict(list)
     for name, id, subject in data:
