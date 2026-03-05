@@ -41,7 +41,7 @@ def group_students_by_subject(data: list[tuple[str, str, str]]) -> dict[str, lis
     """
     slovnik: dict[str, list[Student]] = {}
     for name, id, subject in data:
-        st = Student(name, id)
+        st = Student(name, id)ff
         if subject in slovnik:
             slovnik[subject].append(st)
         else:
