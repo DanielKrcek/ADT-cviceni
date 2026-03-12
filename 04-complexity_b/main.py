@@ -3,22 +3,50 @@ import sys
 import timeit
 from typing import Callable
 
-N_RUNS = 5
+N_RUNS = 50
 
 def load_customers(shop_path: str) -> list[str]:
     """Načte data z konkrétní cesty a vrací seznam ID zákazníků."""
-    return []
+
+    customers: list[str] = []
+
+    # Otevření souboru v režimu čtení - "r"
+    with open(shop_path, "r", encoding="utf-8") as file:
+        try:
+            _ = file.readline() # Zbavení se prvního řádku obsahující názvy sloupců v souborech
+            lines = file.readlines()
+            for line in lines:
+                line = line.strip() # Odstranění neviditelných znaků z okrajů řetězce
+                splitted = line.split(";") # Rozdělení řádku podle oddělovače -> zde středníku
+                _, _, cid, _ = splitted
+                customers.append(cid)
+                """
+                rec = Record(int(time), int(cid)) # Vytvoření objektu Record
+                city_data[ckpt].append(rec)
+                """
+        except Exception as e:
+            # V případě výskytu chyby v try-bloku, proběhne tento kód
+            # Zde konkrétně ošetřuji všechny možné výjimky pomocí obecné Exception
+            # Je možné specifikovat pouze na (ValueError, IndexError, ...)
+            print(f"Something went wrong: {e}")
+    return customers
 
 
 def check_ckpt_list(customers: list[str]) -> list[str]:
     """Varianta A: vrátí seznam unikátních zákazníků v seznamu."""
     seen: list[str] = []
+    for cus in customers:
+            if cus not in seen:
+                seen.append(cus)
     return seen
 
 
 def check_ckpt_set(customers: list[str]) -> set[str]:
     """Varianta B: vrátí množinu unikátních zákazníků v množin."""
     seen: set[str] = set()
+    for cus in customers:
+        if cus not in seen:
+            seen.add(cus)
     return seen
 
 
@@ -28,7 +56,10 @@ def measure(
     n_runs: int = N_RUNS,
 ) -> float:
     """Změří čas běhu funkce func(customers) nástrojem timeit."""
-    return -1.0
+    def func_wrapper() -> None:
+        func(customers)
+
+    return timeit.timeit(func_wrapper,number=n_runs) # 1:03:00 12.3.
 
 
 def experiment(data_path: str, city: str, shop: str, day: str = "1-Mon") -> None:

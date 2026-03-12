@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "Complexity",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "04-complexity_b/main.py",
+            "console": "integratedTerminal",
+            "args": ["data/cities"],
+        }
+    ]
+}
+
+// "program": "$"
