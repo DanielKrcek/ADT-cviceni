@@ -3,7 +3,7 @@ from collections import deque
 def main() -> None:
     print("--- Fronta (Queue) ---")
     # 1. Vytvořte prázdnou deque
-    queue = deque()
+    queue: deque[str] = deque()
 
     # 2. Přidejte prvky "A", "B", "C"
     queue.append("A")
@@ -20,7 +20,7 @@ def main() -> None:
 
     print("\n--- Zásobník (Stack) ---")
     # 1. Vytvořte prázdnou deque
-    stack = deque()
+    stack: deque[int] = deque()
 
     # 2. Přidejte prvky 1, 2, 3
     stack.append(1)
