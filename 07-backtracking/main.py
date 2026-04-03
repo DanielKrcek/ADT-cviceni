@@ -12,13 +12,15 @@ class SudokuSolver:
         # list of lists (rows)
         loaded_rows: list[list[int]] = []
         # TODO implement loading of the file  # noqa: FIX002
-        row: list[int] = []
         with open(file_path, "r", encoding="UTF-8") as f:
-            for line in f:
-                nl = line.strip().split(";")
-                for i in nl:
-                    cislo = int(i)
-                    row.append(cislo)
+            lines = f.readlines()
+            for line in lines:
+                nline = line.strip()
+                cisla = nline.split(";")
+                row: list[int] = []
+                for cislo in cisla:
+                    int_cislo = int(cislo)
+                    row.append(int_cislo)
                 loaded_rows.append(row)
         # convert nested list to numpy array
         self.field = np.array(loaded_rows)

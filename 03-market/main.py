@@ -38,7 +38,6 @@ def load_data(data_path: str, city: str, shop: str, day: str = "1-Mon") -> \
                 line = line.strip() # Odstranění neviditelných znaků z okrajů řetězce
                 splitted = line.split(";") # Rozdělení řádku podle oddělovače -> zde středníku
                 time, ckpt, cid, price = splitted
-                
                 rec = Record(int(time), int(cid)) # Vytvoření objektu Record
                 city_data[ckpt].append(rec)
         except Exception as e:
