@@ -35,7 +35,7 @@ class SudokuSolver:
     def check_row(self, row_index: int) -> bool:
     # pomoci řezu matice dodá ke kontrole celý řádek
         row_data = self.field[row_index, :]
-        if self.check_sequence(row_data):  # noqa: SIM103
+        if self.check_sequence(row_data):
             return True
         return False
 
