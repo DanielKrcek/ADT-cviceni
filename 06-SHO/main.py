@@ -22,9 +22,9 @@ def worker_tick(worker: Worker) -> None:
     if worker.timer > 0:
         worker.timer -= 1
     elif len(worker.source) > 0:
-        clovek = worker.source.popleft()
-        worker.dest.append(clovek)
-        worker.timer = get_delay(worker.period, worker.spread_factor)
+        clovek = worker.source.popleft() # Vyjmutí zákazníka zezačátku fronty
+        worker.dest.append(clovek) # Poslání tohoto zákazníka dál
+        worker.timer = get_delay(worker.period, worker.spread_factor)#"Uspání" workeru po obsloužení zákazníka  
         print(f"{worker.name} právě obsloužil zákazníka, dalšího zvládne za:{worker.timer} sekund.")
 
 def print_snapshot(time: int, queues: list[tuple[str, deque]]) -> None:  # noqa: ARG001
@@ -42,9 +42,12 @@ def main() -> None:
     final_q: deque[int] = deque()
 
     # Seznam pro výpis (jméno, fronta)
-    queues_to_observe: list[tuple[str, deque]] = [("Street", people_in_the_city), ("Gate", gate_q),
-    ("Vege", vege_q), ("Cashier", cash_q), ("Final", final_q)
-    ]
+    queues_to_observe: list[tuple[str, deque]] = [
+        ("Street", people_in_the_city),
+        ("Gate", gate_q),
+        ("Vege", vege_q),
+        ("Cashier", cash_q), 
+        ("Final", final_q)]
 
     # Parametry simulace (střední hodnoty časů v sekundách)
     day_m = 30  # Každých 30s přijde někdo z ulice
@@ -64,7 +67,7 @@ def main() -> None:
     while i <= 7200:
         for worker in [street_worker, gate_worker, vege_worker, cash_worker]:
             worker_tick(worker)
-        if i % 60 == 0:
+        if i % 60 == 0:# Každých 60 vteřin zavoláme výpis
             print_snapshot(0, queues_to_observe)
         i +=1
 
