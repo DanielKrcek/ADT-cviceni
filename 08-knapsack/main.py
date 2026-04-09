@@ -68,7 +68,7 @@ def knapsack_mem(capacity: int, weights: list[int], values: list[float], n: int,
 
 
 def main() -> None:
-    values, weights = load_data("data/songs copy.txt")
+    values, weights = load_data("08-knapsack/data/songs copy.txt")
     capacity = 4 * 60 # čtyři minuty
 
     mem: dict[tuple[int, int], float] = {}
